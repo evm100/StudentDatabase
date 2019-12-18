@@ -8,6 +8,15 @@ import java.sql.Statement;
 public class SQLlite 
 {
 	private static String url;
+	
+	public static void main(String[] args) 
+	{
+		createNewDatabase("edGar.db");
+		createTable();
+		DatabaseMethods db = new DatabaseMethods();
+		db.displayAll();
+	}
+	
     public static void createNewDatabase(String fileName) {
  
         url = "jdbc:sqlite:" + fileName;
@@ -23,22 +32,20 @@ public class SQLlite
             System.out.println(e.getMessage());
         }
     }
+
  
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        createNewDatabase("edGar.db");
-        createTable();
-    }
     
     public static void createTable()
     {
-    	String sql = "CREATE TABLE IF NOT EXISTS warehouses (\n"
-    			+ "id integer PRIMARY KEY,\n"
-    			+ "name text NOT NULL,\n"
-    			+ "capacity real\n"
-    			+ ");";
+    	String sql = 
+    			  "CREATE TABLE tbl_students ("
+    			+ "name TEXT,"
+    			+ "age INT,"
+    			+ "school TEXT,"
+    			+ "grade INT,"
+    			+ "id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE);";
+
+    			
     	
     	try (Connection conn = DriverManager.getConnection(url);
     			Statement stmt = conn.createStatement())

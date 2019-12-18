@@ -12,6 +12,7 @@ public class DatabaseMethods
 	{
 		String url = "jdbc:sqlite:ExampleTest.db";
 		Connection conn = null;
+		
 		try 
 		{
 			conn = DriverManager.getConnection(url);
@@ -20,33 +21,35 @@ public class DatabaseMethods
 		{
 			System.out.println(e.getMessage());
 		}
+		
 		return conn;
 	}
 	
 	public void displayAll()
 	{
-    String sql = "SELECT Name, Age, Grade, School, ID FROM class";
-     
-    try (Connection conn = this.connect();
-       Statement stmt = conn.createStatement();
-       ResultSet rs  = stmt.executeQuery(sql))
-    {
-       
-      // loop through the result set
-      while (rs.next()) 
-      {
-        System.out.println(rs.getString("Name") + "\t" + 
-                  rs.getInt("Age") + "\t" +
-                  rs.getInt("Grade") + "\t" +
-                  rs.getString("School") + "\t" +
-                  rs.getInt("Id"));
-      }
-    } 
-    catch (SQLException e) 
-    {
-      System.out.println(e.getMessage());
-    }
-  }
+	    String sql = "SELECT name, age, grade, school, id FROM tbl_students";
+	     
+	    try (Connection conn = this.connect();
+	       Statement stmt = conn.createStatement();
+	       ResultSet rs  = stmt.executeQuery(sql))
+	    {
+	       
+		// loop through the result set
+		while (rs.next()) 
+		{
+			System.out.println(rs.getString("name") + "\t" + 
+			rs.getInt("age") + "\t" +
+			rs.getInt("grade") + "\t" +
+			rs.getString("school") + "\t" +
+			rs.getInt("id"));
+		}
+	    } 
+	    catch (SQLException e) 
+	    {
+	      System.out.println(e.getMessage());
+	    }
+	}
+	
 	public void addStudent(String name, int age, int grade, String school, int id) 
 	{
 		try 
