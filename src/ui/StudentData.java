@@ -1,10 +1,10 @@
-package students;
+package ui;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.event.ListSelectionListener;
 
-import ui.TemplateUI;
+import students.Student;
 
 import javax.swing.event.ListSelectionEvent;
 import java.awt.Font;
@@ -88,7 +88,7 @@ public class StudentData extends TemplateUI
 		btnSort.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
-				Controller.sortStudents();
+				//Controller.sortStudents();
 			}
 		});
 		btnSort.setBounds(81, 33, 117, 29);

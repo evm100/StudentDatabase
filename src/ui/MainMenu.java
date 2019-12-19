@@ -4,11 +4,9 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import data.SQLlite;
 
 import javax.swing.JButton;
-
-import students.Registration;
-import students.StudentData;
 
 public class MainMenu extends TemplateUI 
 {
@@ -19,12 +17,15 @@ public class MainMenu extends TemplateUI
 			public void run() {
 				try {
 					MainMenu frame = new MainMenu();
-					frame.setVisible(true);
+					frame.setVisible(true);					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
+				
 			}
 		});
+		SQLlite.connect();
+		System.out.println("STUDENT DATABASE");
 	}
 	
 	public MainMenu()
@@ -39,6 +40,7 @@ public class MainMenu extends TemplateUI
 				Registration registration = new Registration();
 				registration.setVisible(true);
 				setVisible(false);
+				System.out.println("Opening Registration");
 			}
 		});
 		bNewStudent.setBounds(100, spaceButtons(1), 200, buttonHeight);
