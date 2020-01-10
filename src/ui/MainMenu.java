@@ -4,7 +4,11 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import data.SQLlite;
+
+import data.DatabaseMethods;
+import data.SQLite;
+import students.Student;
+import util.IO;
 
 import javax.swing.JButton;
 
@@ -13,6 +17,12 @@ public class MainMenu extends TemplateUI
 	private static final long serialVersionUID = 1L;
 	
 	public static void main(String[] args) {
+		
+		IO.print("Starting program");
+		SQLite.connect();
+		IO.print("Loading students into program...");
+		Student.students = DatabaseMethods.toArrayList();
+		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -24,12 +34,13 @@ public class MainMenu extends TemplateUI
 				
 			}
 		});
-		SQLlite.connect();
-		System.out.println("STUDENT DATABASE");
 	}
 	
 	public MainMenu()
 	{	
+		//SQLite.connect();
+		IO.print("STUDENT DATABASE");		
+		
 		totalButtons = 2;
 		buttonHeight = 75;
 		//New Student
@@ -69,6 +80,6 @@ public class MainMenu extends TemplateUI
 	
 	public String name()
 	{
-		return "";
+		return "Main Menu";
 	}
 }

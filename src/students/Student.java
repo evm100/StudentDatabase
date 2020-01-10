@@ -36,6 +36,11 @@ public class Student implements Comparable<Student>
 		System.out.println("Student Registered!");
 	}
 	
+	public static void deleteStudent(int id)
+	{
+		
+	}
+	
 	@Override
 	public int compareTo(Student student) 
 	{
@@ -82,7 +87,7 @@ public class Student implements Comparable<Student>
 		try 
 		{
 			Connection conn = DatabaseMethods.connect();
-			PreparedStatement prep = conn.prepareStatement("INSERT INTO class values(?, ?, ?, ?);");
+			PreparedStatement prep = conn.prepareStatement("INSERT INTO tbl_students (Name, Age, Grade, School) values(?, ?, ?, ?);");
 			prep.setString(1, name);
 			prep.setInt(2, Integer.valueOf(age));
 			prep.setInt(3, Integer.valueOf(grade));

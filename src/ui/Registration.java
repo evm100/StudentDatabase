@@ -26,6 +26,8 @@ public class Registration extends TemplateUI
 	
 	public Registration()
 	{
+		
+		
 		//Enter Data
 		
 		
@@ -34,6 +36,7 @@ public class Registration extends TemplateUI
 		bRegisterStudent.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
+				System.out.println("Pressed register student button");
 				setStudentData();
 			}
 		});
@@ -83,6 +86,8 @@ public class Registration extends TemplateUI
 	
 	private void setStudentData()
 	{
+		System.out.println("setStudentData()");
+		
 		if(!tName.getText().equals("") && !tAge.getText().equals("") && !tSchool.getText().equals("") && !tGrade.getText().equals("")) 
 		{
 			name = tName.getText();
@@ -90,7 +95,8 @@ public class Registration extends TemplateUI
 			age = tAge.getText();
 			grade = tGrade.getText();
 			
-			Student.registerStudent(name, age, school, grade);
+			System.out.println("Attempting to register student");
+			Student.registerStudent(name, age, grade, school);
 		}
 	}
 	

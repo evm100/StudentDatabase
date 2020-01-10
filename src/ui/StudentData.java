@@ -4,7 +4,9 @@ import javax.swing.DefaultListModel;
 import javax.swing.JList;
 import javax.swing.event.ListSelectionListener;
 
+import data.DatabaseMethods;
 import students.Student;
+import util.IO;
 
 import javax.swing.event.ListSelectionEvent;
 import java.awt.Font;
@@ -13,6 +15,7 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Color;
 
 public class StudentData extends TemplateUI
 {
@@ -21,16 +24,21 @@ public class StudentData extends TemplateUI
 	private JTextField tAge;
 	private JTextField tSchool;
 	private JTextField tGrade;
+	private JTextField tId;
 		
+	private int number;
+	private JTextField tSearch;
+	
 	public StudentData()
 	{
 		getContentPane().setLayout(null);
 		
+		DatabaseMethods.printStudents(DatabaseMethods.sortByName(Student.students));
 		
 		DefaultListModel<String> list = new DefaultListModel<String>();
-		for(int i = 0; i < Student.students.size(); i++)
+		for (Student student : Student.students)
 		{
-			list.addElement(Student.students.get(i).toString());
+			list.addElement(student.toString());
 		}
 		
 		JList<String> studentList = new JList<String>(list);
@@ -38,10 +46,28 @@ public class StudentData extends TemplateUI
 		studentList.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) 
 			{
-				tName.setText(Student.students.get(e.getFirstIndex()).getName());
-				tAge.setText(Student.students.get(e.getFirstIndex()).getAge());
-				tSchool.setText(Student.students.get(e.getFirstIndex()).getSchool());
-				tGrade.setText(Student.students.get(e.getFirstIndex()).getGrade());
+				if(e.getValueIsAdjusting())
+				{
+					IO.print("First Index: " + Integer.toString(e.getFirstIndex()));
+					IO.print("Last Index: " + Integer.toString(e.getLastIndex()));
+					
+					/*
+					 * THE FIX TO JLIST:
+					 */
+					number = (number == e.getLastIndex() ? e.getFirstIndex() : e.getLastIndex());
+					/*
+					 * 
+					 */
+					
+					Student chosen = Student.students.get(number);
+					
+					tName.setText(chosen.getName());
+					tAge.setText(chosen.getAge());
+					tSchool.setText(chosen.getSchool());
+					tGrade.setText(chosen.getGrade());
+				
+					tId.setText(chosen.getId());
+				}
 			}
 		});
 		studentList.setVisibleRowCount(Student.students.size());		
@@ -84,20 +110,77 @@ public class StudentData extends TemplateUI
 		getContentPane().add(tGrade);
 		tGrade.setColumns(10);
 		
+		JLabel lId = new JLabel("Id:");
+		lId.setBounds(243, 300, 61, 16);
+		getContentPane().add(lId);
+		
+		tId = new JTextField();
+		tId.setBounds(243, 320, 130, 26);
+		getContentPane().add(tId);
+		tId.setColumns(10);
+		
 		JButton btnSort = new JButton("Sort");
+		btnSort.setFont(new Font("Lucida Grande", Font.PLAIN, 10));
 		btnSort.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
-				//Controller.sortStudents();
+				Student.students = DatabaseMethods.sortByName(Student.students);
+				refresh();
 			}
 		});
-		btnSort.setBounds(81, 33, 117, 29);
+		btnSort.setBounds(6, 116, 52, 29);
 		getContentPane().add(btnSort);
+		
+		JButton bRefresh = new JButton("Refresh");
+		bRefresh.setFont(new Font("Lucida Grande", Font.PLAIN, 10));
+		bRefresh.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) 
+			{
+				Student.students = DatabaseMethods.toArrayList();
+				refresh();
+			}
+		});
+		bRefresh.setIcon(null);
+		bRefresh.setBounds(6, 80, 52, 29);
+		getContentPane().add(bRefresh);
+		
+		JButton btnDelete = new JButton("Delete");
+		btnDelete.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) 
+			{
+				DatabaseMethods.removeStudent(Integer.valueOf(tId.getText()));
+				Student.students = DatabaseMethods.toArrayList();
+				refresh();
+			}
+		});
+		btnDelete.setBounds(266, 32, 90, 29);
+		getContentPane().add(btnDelete);
+		
+		tSearch = new JTextField();
+		tSearch.setForeground(Color.GRAY);
+		tSearch.setFont(new Font("Lucida Grande", Font.ITALIC, 11));
+		tSearch.setText("Search");
+		tSearch.setBounds(88, 33, 130, 26);
+		getContentPane().add(tSearch);
+		tSearch.setColumns(10);
+		
+		JButton bSearch = new JButton("Search");
+		bSearch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) 
+			{
+				Student.students = DatabaseMethods.searchName(tSearch.getText());
+				refresh();
+			}
+		});
+		bSearch.setBounds(45, 32, 45, 29);
+		getContentPane().add(bSearch);
 	}
 	
-	public void reload()
+	public void refresh()
 	{
-		
+		StudentData sdata = new StudentData();
+		sdata.setVisible(true);
+		setVisible(false);
 	}
 	
 	public String name()

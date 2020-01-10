@@ -8,6 +8,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+import util.IO;
+
 public class TemplateUI extends JFrame
 {
 	private static final long serialVersionUID = 1L;
@@ -16,6 +18,8 @@ public class TemplateUI extends JFrame
 	
 	public TemplateUI()
 	{
+		IO.print("Menu opened: " + name());
+		
 		setBounds(100, 100, 400, 400);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getContentPane().setLayout(null);
