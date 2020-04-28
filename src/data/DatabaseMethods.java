@@ -5,7 +5,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.sql.PreparedStatement;
 import students.Student;
 import util.IO;
@@ -143,6 +142,7 @@ public class DatabaseMethods
 		return students;
 	}
 	
+	/*
 	public static ArrayList<Student> sortByName(ArrayList<Student> list)
 	{
 		ArrayList<Student> sortedStudents = toArrayList();
@@ -150,6 +150,7 @@ public class DatabaseMethods
 		
 		return sortedStudents;
 	}
+	*/
 	
 	public static ArrayList<Student> searchName(String name)
 	{

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 import data.DatabaseMethods;
 
-public class Student implements Comparable<Student>
+public class Student
 {
 	public static ArrayList<Student> students = new ArrayList<Student>();
 	
@@ -41,10 +41,20 @@ public class Student implements Comparable<Student>
 		
 	}
 	
-	@Override
-	public int compareTo(Student student) 
+	public int compareTo(Student student, String type) 
 	{
-		return(this.getName().compareToIgnoreCase(student.getName()));
+		switch (type) {
+		case "name": 
+			return(this.getName().compareToIgnoreCase(student.getName()));
+		case "age": 
+			return (Integer.compare(Integer.valueOf(this.getAge()), Integer.valueOf(student.getAge())));
+		case "school": 
+			return (this.getSchool().compareToIgnoreCase(student.getSchool()));
+		case "grade": 
+			return (Integer.compare(Integer.valueOf(this.getGrade()), Integer.valueOf(student.getGrade())));
+		default: 
+			return 0;
+		}
 	}
 	
 	public String getName()

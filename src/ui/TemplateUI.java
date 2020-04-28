@@ -20,7 +20,7 @@ public class TemplateUI extends JFrame
 	{
 		IO.print("Menu opened: " + name());
 		
-		setBounds(100, 100, 400, 400);
+		setBounds(100, 100, 450, 410);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getContentPane().setLayout(null);
 		//Back
